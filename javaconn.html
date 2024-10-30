@@ -12,8 +12,24 @@
 
     <script>
         document.getElementById('getInfo').addEventListener('click', () => {
+            const userAgent = navigator.userAgent;
+            let os = 'Inconnu';
+
+            // Détection du système d'exploitation à partir du userAgent
+            if (userAgent.includes('Windows NT')) {
+                os = 'Windows';
+            } else if (userAgent.includes('Mac OS X')) {
+                os = 'macOS';
+            } else if (userAgent.includes('X11') || userAgent.includes('Linux')) {
+                os = 'Linux';
+            } else if (userAgent.includes('Android')) {
+                os = 'Android';
+            } else if (userAgent.includes('iPhone') || userAgent.includes('iPad')) {
+                os = 'iOS';
+            }
+
             const userInfo = {
-                userAgent: navigator.userAgent,
+                userAgent: userAgent,
                 platform: navigator.platform,
                 language: navigator.language,
                 screenWidth: screen.width,
@@ -21,9 +37,12 @@
                 innerWidth: window.innerWidth,
                 innerHeight: window.innerHeight,
                 onlineStatus: navigator.onLine,
-                deviceMemory: navigator.deviceMemory || 'Non supporté',
+                deviceMemory: navigator.deviceMemory ? `${navigator.deviceMemory} GB` : 'Non supporté',
                 hardwareConcurrency: navigator.hardwareConcurrency || 'Non supporté',
-                battery: 'Non supporté'
+                battery: 'Non supporté',
+                operatingSystem: os, // Ajout du système d'exploitation
+                cpu: 'Non disponible', // Placeholder pour le CPU
+                memorySize: 'Non disponible' // Placeholder pour la taille de la mémoire
             };
 
             // Vérifier si l'API Battery Status est supportée
