@@ -22,11 +22,25 @@
                 innerHeight: window.innerHeight,
                 onlineStatus: navigator.onLine,
                 deviceMemory: navigator.deviceMemory || 'Non supporté',
-                hardwareConcurrency: navigator.hardwareConcurrency || 'Non supporté'
+                hardwareConcurrency: navigator.hardwareConcurrency || 'Non supporté',
+                battery: 'Non supporté'
             };
 
-            // Afficher les informations sur la page
-            document.getElementById('infoDisplay').textContent = JSON.stringify(userInfo, null, 2);
+            // Vérifier si l'API Battery Status est supportée
+            if (navigator.getBattery) {
+                navigator.getBattery().then(battery => {
+                    userInfo.battery = {
+                        level: battery.level * 100 + '%', // Niveau de la batterie en pourcentage
+                        charging: battery.charging // État de charge
+                    };
+
+                    // Afficher les informations sur la page
+                    document.getElementById('infoDisplay').textContent = JSON.stringify(userInfo, null, 2);
+                });
+            } else {
+                // Afficher les informations sur la page sans l'état de la batterie
+                document.getElementById('infoDisplay').textContent = JSON.stringify(userInfo, null, 2);
+            }
         });
     </script>
 </body>
