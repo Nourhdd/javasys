@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collecte d'informations utilisateur</title>
+</head>
+<body>
+    <h1>Bienvenue sur notre site</h1>
+    <button id="getInfo">Obtenir mes informations</button>
+    <pre id="infoDisplay"></pre>
+
+    <script>
+        document.getElementById('getInfo').addEventListener('click', () => {
+            const userInfo = {
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                language: navigator.language,
+                screenWidth: screen.width,
+                screenHeight: screen.height,
+                innerWidth: window.innerWidth,
+                innerHeight: window.innerHeight,
+                onlineStatus: navigator.onLine,
+                deviceMemory: navigator.deviceMemory || 'Non supporté',
+                hardwareConcurrency: navigator.hardwareConcurrency || 'Non supporté'
+            };
+
+            // Afficher les informations sur la page
+            document.getElementById('infoDisplay').textContent = JSON.stringify(userInfo, null, 2);
+        });
+    </script>
+</body>
+</html>
